@@ -1,7 +1,7 @@
 import sys
 import subprocess
 import os
-
+import * from lib
 
 def install_dependancies():
     subprocess.check_call(['apt', 'install', 'git']) # use to to auto commits
@@ -12,7 +12,6 @@ def install_dependancies():
 def main():
     install_dependancies()
     
-
-if __name__ == "main":
+if __name__ == "__main__":
     main()
     
