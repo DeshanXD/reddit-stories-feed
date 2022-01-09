@@ -25,8 +25,6 @@ def scrape_data():
         for i in subreddits:
             u = "https://www.reddit.com/r/{}/top.json".format(i)
             urls.append(u)
-
-        print(urls)
         return urls
 
     def load_url(url, timeout): # helper
@@ -45,7 +43,7 @@ def scrape_data():
             except Exception as exc:
                 print(exc)
             else:
-                print("ok")
+                print("Request execute: SUCCESS")
 
     return response_data        # list of json(str) response
 
@@ -92,7 +90,7 @@ def embed_builder(title, body, author):
         # TODO: Add Image with heading
         pass        
     
-    embed = DiscordEmbed(title=title)
+    embed = DiscordEmbed(title=title, description=body)
     embed.set_author(name=author)
     embed.set_timestamp()
 
