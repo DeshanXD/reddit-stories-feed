@@ -6,8 +6,9 @@ from discord_webhook import DiscordWebhook
 
 def install_dependancies():
     # subprocess.check_call(['apt', 'install', 'git']) # TODO: setup auto commit system
-    subprocess.check_call([sys.executable, '-m' , 'pip', 'install',  'requests'])
-    subprocess.check_call([sys.executable, '-m' , 'pip', 'install',  'discord-webhook'])
+    subprocess.check_call([sys.executable, '-m' , 'pip3', 'install',  'discord-webhook'])
+    subprocess.check_call([sys.executable, '-m' , 'pip3', 'install',  'requests'])
+    
 
 
 def main(w_hook):
