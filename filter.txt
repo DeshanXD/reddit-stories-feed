@@ -1,0 +1,2 @@
+TIFU=Today I fucked up
+AITA=Am I the Asshole
