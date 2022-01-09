@@ -1,7 +1,6 @@
 import requests
 import concurrent.futures
-
-subreddits = []
+import re
 
 def scrape_data():
     """
@@ -9,6 +8,7 @@ def scrape_data():
     and cache it up for the program.
     """
     response_data = []
+    subreddits = []
     
     # read the file reddit file and add that in global list
     with open("reddits.txt", "r") as r_file:
@@ -47,11 +47,28 @@ def scrape_data():
     return response_data        # list of json response
 
 
+def content_filter(content_str):
+    """
+    Simple algorithm to perform basic filtering in title's and
+    content strings.
+    """
+    result  = content_str
+    
+    with open("filter.txt", "r") as f:
+        for line in f:
+            fil_ = line.strip().split("=")
+            pattern = re.compile(fil_[0], re.IGNORECASE)
+            result = pattern.sub(fil_[1], result)
+
+    return result
+
+            
+
 if __name__ == "__main__":
     print ("Lib has been directly invoked")
 
+    # debug
     json_l = scrape_data()
-
     for i in json_l:
         print(i["data"]["children"][0]["data"]["title"]) # target only 0th element #expect 3 titles
 
