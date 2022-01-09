@@ -73,7 +73,13 @@ def content_pool(big_s):
     k = randrange(20)
     
     # TODO: filter the posts [remove updates]
-    post = json.loads(big_s[j])["data"]["children"][k]["data"]
+    try:
+        post = json.loads(big_s[j])["data"]["children"][k]["data"]
+    except IndexError as e:
+        print("Index is out of range printing the first element")
+        post = json.loads(big_s[j])["data"]["children"][0]["data"]
+    else:
+        print("Destructuring post!")
 
     # Destructuring
     title = post["title"]
