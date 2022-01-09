@@ -2,18 +2,16 @@ import sys
 import subprocess
 import os
 
-def install_dependancies():
-    # subprocess.check_call(['apt', 'install', 'git']) # TODO: setup auto commit system
-    subprocess.check_call([sys.executable, '-m' , 'pip3', 'install',  'discord-webhook'])
-    subprocess.check_call([sys.executable, '-m' , 'pip3', 'install',  'requests'])
+# Install all the dependancies need for the program
+
+subprocess.check_call([sys.executable, '-m' , 'pip', 'install',  'discord-webhook'])
+subprocess.check_call([sys.executable, '-m' , 'pip', 'install',  'requests'])
 
 # Third party dependancies
 from lib import *    
 from discord_webhook import DiscordWebhook
 
 def main(w_hook):
-    # Install all the dependancies need for the program
-    install_dependancies()
 
     # Get random post by calling all the subreddits
     d = scrape_data()
