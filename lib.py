@@ -1,6 +1,9 @@
 import requests
 import concurrent.futures
+from random import randrange
+from discord_webhook import DiscordEmbed
 import re
+import json
 
 def scrape_data():
     """
@@ -37,19 +40,19 @@ def scrape_data():
             try:
 #                data = future.result().json()
 #                print(data)     # debug
-                response_data.append(future.result().json())
+                response_data.append(future.result().text)
                 
             except Exception as exc:
                 print(exc)
             else:
                 print("ok")
 
-    return response_data        # list of json response
+    return response_data        # list of json(str) response
 
 
 def content_filter(content_str):
     """
-    Simple algorithm to perform basic filtering in title's and
+    Algorithm to perform basic filtering in title's and
     content strings.
     """
     result  = content_str
@@ -63,14 +66,43 @@ def content_filter(content_str):
     return result
 
             
+def content_pool(big_s):
+    """
+    This function returns three variables [Title, Body, Author]
+    Input: [Array of top.json subreddit response]
+    """
+    j = randrange(len(big_s))
+    k = randrange(20)
+    
+    # TODO: filter the posts [remove updates]
+    post = json.loads(big_s[j])["data"]["children"][k]["data"]
+
+    # Destructuring
+    title = post["title"]
+    body = post["selftext"]
+    author = post["author"]
+
+    return title, body, author
+
+def embed_builder(title, body, author):
+    """
+    Returns a discord embed
+    """
+    def auto_image_fill():
+        # TODO: Add Image with heading
+        pass        
+    
+    embed = DiscordEmbed(title=title)
+    embed.set_author(name=author)
+    embed.set_timestamp()
+
+    return embed
 
 if __name__ == "__main__":
     print ("Lib has been directly invoked")
 
     # debug
-    json_l = scrape_data()
-    for i in json_l:
-        print(i["data"]["children"][0]["data"]["title"]) # target only 0th element #expect 3 titles
-
+    title, body, author = content_pool(scrape_data())
+    print(title, "\n", body, "\n", author)
 else:
     print ("lib has been imported!")
