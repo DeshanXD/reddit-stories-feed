@@ -61,6 +61,13 @@ def content_filter(content_str):
             pattern = re.compile(fil_[0], re.IGNORECASE)
             result = pattern.sub(fil_[1], result)
 
+            # Make bad words spoilers in discord!
+    with open("badwords.txt", "r") as f:
+        for line in f:
+            fil_ = line.strip()
+            pattern = re.compile(fil_, re.IGNORECASE)
+            result = pattern.sub(f"||{fil_}||", result)
+
     return result
 
             
@@ -73,6 +80,7 @@ def content_pool(big_s):
     k = randrange(20)
     
     # TODO: filter the posts [remove updates]
+    
     try:
         post = json.loads(big_s[j])["data"]["children"][k]["data"]
     except IndexError as e:
